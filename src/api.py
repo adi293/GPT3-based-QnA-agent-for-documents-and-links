@@ -56,30 +56,30 @@ def check_key():
             return False
     
 def validate_key(model_api):
-    try:
-        # Note: model api can either be "OpenAI's GPT-3 [text-davinci-003]" or "Meta-Llama-2 [llama-2-7b-chat]"
+    # try:
+    # Note: model api can either be "OpenAI's GPT-3 [text-davinci-003]" or "Meta-Llama-2 [llama-2-7b-chat]"
+    
+    if model_api == "OpenAI's GPT-3 [text-davinci-003]":
+        print(model)
+        openai.api_key = st.session_state["api_key"]
+        os.environ["OPENAI_API_KEY"] = st.session_state["api_key"]
+        r = openai.Completion.create(model=model, prompt="t.", max_tokens=5)
+        print("Connect to OpenAI API.")
+    elif model_api == "Meta-Llama-2 [llama-2-7b-chat]":
+        response = requests.post(st.session_state["api_key"]+"health-check")
+        response = json.loads(response.content)["status"]
+    
+        if response == 'RUNNING':
+            print("The FastAPI application is running.")
+        else:
+            print("The FastAPI application is not running.")
+    
+    st.sidebar.success("API key validated")
+    return True
         
-        if model_api == "OpenAI's GPT-3 [text-davinci-003]":
-            print(model)
-            openai.api_key = st.session_state["api_key"]
-            os.environ["OPENAI_API_KEY"] = st.session_state["api_key"]
-            r = openai.Completion.create(model=model, prompt="t.", max_tokens=5)
-            print("Connect to OpenAI API.")
-        elif model_api == "Meta-Llama-2 [llama-2-7b-chat]":
-            response = requests.post(st.session_state["api_key"]+"health-check")
-            response = json.loads(response.content)["status"]
-        
-            if response == 'RUNNING':
-                print("The FastAPI application is running.")
-            else:
-                print("The FastAPI application is not running.")
-        
-        st.sidebar.success("API key validated")
-        return True
-        
-    except:
-        st.sidebar.error("API key invalid for {}, please change the key. Model loaded is {}".format(model_api, model))
-        return False
+    # except:
+    #     st.sidebar.error("API key invalid for {}, please change the key.".format(model_api))
+    #     return False
     
 def clear_key():
     st.session_state["api_key"] = None
