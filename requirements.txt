@@ -1,6 +1,6 @@
 streamlit==1.22.0
 tiktoken
-langchain
+langchain==0.0.351
 youtube-transcript-api==0.6.0
 pytube==15.0.0
 faiss-cpu==1.7.4
