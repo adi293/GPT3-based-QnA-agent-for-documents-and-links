@@ -78,7 +78,7 @@ def validate_key(model_api):
         return True
         
     except:
-        st.sidebar.error("API key invalid for {}, please change the key".format(model_api))
+        st.sidebar.error("API key invalid for {}, please change the key. Model loaded is {}".format(model_api, model))
         return False
     
 def clear_key():
