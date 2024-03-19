@@ -60,6 +60,7 @@ def validate_key(model_api):
         # Note: model api can either be "OpenAI's GPT-3 [text-davinci-003]" or "Meta-Llama-2 [llama-2-7b-chat]"
         
         if model_api == "OpenAI's GPT-3 [text-davinci-003]":
+            print(model)
             openai.api_key = st.session_state["api_key"]
             os.environ["OPENAI_API_KEY"] = st.session_state["api_key"]
             r = openai.Completion.create(model=model, prompt="t.", max_tokens=5)
