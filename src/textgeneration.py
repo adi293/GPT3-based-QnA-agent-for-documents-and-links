@@ -26,7 +26,8 @@ config_object.read("./config.ini") ###### Read config file
 def moderation(text): ###### moderation function
         client = openai.OpenAI(timeout=None)
         response = client.moderations.create(input=text) ###### call the OpenAI Moderation API
-        if response["results"][0]["flagged"]: ###### check if the generated text is flagged
+        
+        if response.results[0].flagged: ###### check if the generated text is flagged
             return 'Moderated : The generated text is of violent, sexual or hateful in nature. Try generating another piece of text or change your story topic. Contact us for more information' ###### return a message to the user
         else: ###### if the generated text is not flagged
             return text ###### return the input text
@@ -50,19 +51,24 @@ def moderation(text): ###### moderation function
 #### reason: the reason for stopping the text generation ####
 def open_ai_call(model="", prompt="", temperature=0.7, max_tokens=256, top_p=0.5, frequency_penalty=1, presence_penalty=1, user_id="test-user"):
         client = openai.OpenAI(timeout=None)
-        response = client.completions.create(
-            model=model, prompt=prompt, temperature=temperature, max_tokens=max_tokens, top_p=top_p, frequency_penalty=frequency_penalty,
+        response = client.chat.completions.create(
+            model=model, 
+            messages=[{
+                "role": "user", 
+                "content": prompt
+            }], 
+            temperature=temperature, max_tokens=max_tokens, top_p=top_p, frequency_penalty=frequency_penalty,
             presence_penalty=presence_penalty, user=user_id
         )
 
         # Checking if the response is appropriate
-        text = moderation(response['choices'][0]['text'])
+        text = moderation(response.choices[0].message.content)
 
-        tokens = response['usage']['total_tokens']
+        tokens = response.usage.total_tokens
         words = len(text.split())
 
         # get the reason for stopping the text generation
-        reason = response['choices'][0]['finish_reason'] 
+        reason = response.choices[0].finish_reason
         
         return text, tokens, words, reason 
 
