@@ -66,6 +66,10 @@ if "page" not in st.session_state:
 if "words" not in st.session_state:
     st.session_state["page"] = None
 
+########################################################################################################################
+print(">"*50, "CHECKING")
+########################################################################################################################
+
 # Step 1 - Check if OpenAI Key is present, otherwise open the key input form -------------------------------------------
 if (st.session_state["api_key"] is None) or (st.session_state["uploaded"]==False): 
     print("Entered Step 1")

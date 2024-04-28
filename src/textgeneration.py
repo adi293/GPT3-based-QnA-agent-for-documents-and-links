@@ -24,7 +24,8 @@ config_object.read("./config.ini") ###### Read config file
 #### This function is called in the open_ai_call function ####
 #### This function takes a string as input ####
 def moderation(text): ###### moderation function
-        response = openai.Moderation.create(input=text) ###### call the OpenAI Moderation API
+        client = openai.OpenAI(timeout=None)
+        response = client.moderations.create(input=text) ###### call the OpenAI Moderation API
         if response["results"][0]["flagged"]: ###### check if the generated text is flagged
             return 'Moderated : The generated text is of violent, sexual or hateful in nature. Try generating another piece of text or change your story topic. Contact us for more information' ###### return a message to the user
         else: ###### if the generated text is not flagged
@@ -48,7 +49,8 @@ def moderation(text): ###### moderation function
 #### words: the number of words used for generating text ####
 #### reason: the reason for stopping the text generation ####
 def open_ai_call(model="", prompt="", temperature=0.7, max_tokens=256, top_p=0.5, frequency_penalty=1, presence_penalty=1, user_id="test-user"):
-        response = openai.Completion.create(
+        client = openai.OpenAI(timeout=None)
+        response = client.completions.create(
             model=model, prompt=prompt, temperature=temperature, max_tokens=max_tokens, top_p=top_p, frequency_penalty=frequency_penalty,
             presence_penalty=presence_penalty, user=user_id
         )
@@ -81,7 +83,7 @@ def llm_response(query, doc, model_api):
     """
     print(prompt)
 
-    if model_api == "OpenAI's GPT-3 [text-davinci-003]":
+    if model_api == "OpenAI's GPT-3.5-Turbo-0125":
         model = config_object["MODEL"]["openai_model"]
         text, _, _, _ = open_ai_call(model, prompt)
         try: 
@@ -125,7 +127,8 @@ def llm_response(query, doc, model_api):
 #### total_tokens: the total number of tokens used for generating text ####
 #### response_tokens: the number of tokens used for generating text ####
 def chat_gpt_call(message_dict=[{"role":"user","content":"Hello!"}], model="gpt-3.5-turbo", max_tokens=120,temperature=0.5):
-    response=openai.ChatCompletion.create(model=model, messages=message_dict,max_tokens=max_tokens,temperature=temperature) ###### call the OpenAI ChatCompletion API
+    client = openai.OpenAI(timeout=None)
+    response=client.chat.completions.create(model=model, messages=message_dict,max_tokens=max_tokens,temperature=temperature) ###### call the OpenAI ChatCompletion API
     response_dict=response.choices[0].message ###### get the response dictionary
     response_text=response_dict.content ###### get the response text
     words=len(response_text.split()) ###### count the number of words used
@@ -200,7 +203,7 @@ def create_dict_from_session(): ###### create_dict_from_session function
 def search_context(fn_db, query, model_api): ###### search_context function
     print(">>>>> Searching-Context")
 
-    if model_api == "OpenAI's GPT-3 [text-davinci-003]":
+    if model_api == "OpenAI's GPT-3.5-Turbo-0125":
         embeddings = OpenAIEmbeddings()
         db = FAISS.load_local(
             folder_path=os.getcwd(),

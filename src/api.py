@@ -59,11 +59,21 @@ def validate_key(model_api):
     # try:
     # Note: model api can either be "OpenAI's GPT-3 [text-davinci-003]" or "Meta-Llama-2 [llama-2-7b-chat]"
     
-    if model_api == "OpenAI's GPT-3 [text-davinci-003]":
+    if model_api == "OpenAI's GPT-3.5-Turbo-0125":
         print(model)
         openai.api_key = st.session_state["api_key"]
         os.environ["OPENAI_API_KEY"] = st.session_state["api_key"]
-        r = openai.Completion.create(model=model, prompt="t.", max_tokens=5)
+
+        # Initialize Client
+        client = openai.OpenAI(timeout=None)
+        # r = openai.Completion.create(model=model, prompt="t.", max_tokens=5)
+
+        r = client.chat.completions.create(
+            messages=[{"role": "user", "content": "Hello!"}],
+            model=model,
+            max_tokens=2
+        )
+                
         print("Connect to OpenAI API.")
     elif model_api == "Meta-Llama-2 [llama-2-7b-chat]":
         response = requests.post(st.session_state["api_key"]+"health-check")
