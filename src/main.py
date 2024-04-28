@@ -126,7 +126,7 @@ if (st.session_state["api_key"] is not None) and (st.session_state["uploaded"]==
             # If input is large, create embeddings for the document
             with st.spinner("Processing document..."):
                 if (st.session_state["fn_db"] is None) and (st.session_state["token"] > 2000): 
-                    if model_api == "OpenAI's GPT-3 [text-davinci-003]":
+                    if model_api == "OpenAI's GPT-3.5-Turbo-0125":
                         st.session_state["fn_db"] = create_embeddings(st.session_state["string_data"]) 
                     elif model_api == "Meta-Llama-2 [llama-2-7b-chat]":
                         fn_db = faiss_db_file_name(st.session_state["string_data"])
@@ -149,6 +149,7 @@ if (st.session_state["api_key"] is not None) and (st.session_state["uploaded"]==
                 #### if mdict !=[]:
                 ####     response_text=q_response_chat(inp,info,mdict)
                 ################################################################
+                print("here>>>>>")
                 if st.session_state["token"]>2000:
                     with st.spinner("Finding relevant sections of the document..."):
                         info = search_context(st.session_state["fn_db"], inp, model_api)
