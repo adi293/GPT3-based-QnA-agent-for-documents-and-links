@@ -87,7 +87,7 @@ def llm_response(query, doc, model_api):
         Question: {query}
         Response:
     """
-    print(prompt)
+    # print(prompt)
 
     if model_api == "OpenAI's GPT-3.5-Turbo-0125":
         model = config_object["MODEL"]["openai_model"]
