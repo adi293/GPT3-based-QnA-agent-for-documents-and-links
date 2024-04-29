@@ -227,7 +227,7 @@ def create_embeddings(text): #### Function to create embeddings from text ####
          f.close()
     loader = TextLoader(os.getcwd()+'temp.txt') 
     document = loader.load()
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=4000, chunk_overlap=2000)
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=20000, chunk_overlap=2000)
     docs = text_splitter.split_documents(document) 
 
     embeddings = OpenAIEmbeddings() #### Initialize embeddings ####
