@@ -55,7 +55,6 @@ def check_upload(uploaded, input_choice): #### Function to check if file has bee
         os.remove(loc) #### Remove image file from Assets folder ####
         return words, pages, string_data, True, tokens  #### Return number of words, number of embeddings, extracted text, True to indicate successful upload and number of tokens ####
     elif input_choice=="File Directory":
-        print(uploaded)
         words, pages, string_data, tokens = extract_directory_files(uploaded)
         return words, pages, string_data, True, tokens
     else: #### If input choice is not any of the above, return False to indicate failed upload ####
