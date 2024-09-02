@@ -89,7 +89,7 @@ def llm_response(query, doc, model_api):
     """
     # print(prompt)
 
-    if model_api == "OpenAI's GPT-3.5-Turbo-0125":
+    if model_api == "OpenAI's GPT-4o-mini":
         model = config_object["MODEL"]["openai_model"]
         text, _, _, _ = open_ai_call(model, prompt)
         try: 
@@ -132,7 +132,7 @@ def llm_response(query, doc, model_api):
 #### words: the number of words used for generating text ####
 #### total_tokens: the total number of tokens used for generating text ####
 #### response_tokens: the number of tokens used for generating text ####
-def chat_gpt_call(message_dict=[{"role":"user","content":"Hello!"}], model="gpt-3.5-turbo", max_tokens=120,temperature=0.5):
+def chat_gpt_call(message_dict=[{"role":"user","content":"Hello!"}], model="gpt-4o-mini", max_tokens=120,temperature=0.5):
     client = openai.OpenAI(timeout=None)
     response=client.chat.completions.create(model=model, messages=message_dict,max_tokens=max_tokens,temperature=temperature) ###### call the OpenAI ChatCompletion API
     response_dict=response.choices[0].message ###### get the response dictionary
@@ -209,7 +209,7 @@ def create_dict_from_session(): ###### create_dict_from_session function
 def search_context(fn_db, query, model_api): ###### search_context function
     print(">>>>> Searching-Context")
 
-    if model_api == "OpenAI's GPT-3.5-Turbo-0125":
+    if model_api == "OpenAI's GPT-4o-mini":
         embeddings = OpenAIEmbeddings()
         db = FAISS.load_local(
             folder_path=os.getcwd(),

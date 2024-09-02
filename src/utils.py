@@ -16,7 +16,7 @@ greeting=config_object["MSG"]["greeting"] #
 ###
 
 def api_selector():
-    input_choice = st.sidebar.radio("#### :blue[Choose the LLM]", ("OpenAI's GPT-3.5-Turbo-0125", "Meta-Llama-2 [llama-2-7b-chat]"))
+    input_choice = st.sidebar.radio("#### :blue[Choose the LLM]", ("OpenAI's GPT-4o-mini", "Meta-Llama-2 [llama-2-7b-chat]"))
     return input_choice
         
 
