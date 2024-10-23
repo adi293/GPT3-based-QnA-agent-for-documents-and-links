@@ -1,5 +1,3 @@
-![AnswerBot](./Assets/logo-no-background.png)
-
 ---
 This is a modified repository, forked from original repository by Abhinav Kimothi (https://github.com/abhinav-kimothi/VIDIA.I). 
 
